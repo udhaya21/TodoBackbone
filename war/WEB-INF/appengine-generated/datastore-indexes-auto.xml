@@ -1,0 +1,10 @@
+<!-- Indices written at Sun, 23 Apr 2017 16:02:25 UTC -->
+<datastore-indexes autoGenerate="true">
+	<datastore-index kind="TodoBackbone" ancestor="true">
+		<property name="email"/>
+	</datastore-index>
+	<datastore-index kind="FacebookLogin" ancestor="true">
+		<property name="id"/>
+	</datastore-index>
+</datastore-indexes>
+

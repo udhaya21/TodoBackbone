@@ -1,0 +1,294 @@
+@CHARSET "UTF-8";
+@charset "UTF-8";
+    .clear-fix {
+    clear: both;
+}
+.icon-close:before {
+    content: "x"}
+.popup {
+    top: 0;
+    position: fixed;
+    width: 100%;
+    z-index: 1005;
+    height: 100%;
+    background: url(/images/black-overlay.png) left top;
+    display: none;
+}
+.popup-close {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    font-size: 1.5em;
+    color: #bbc5ca;
+    cursor: pointer;
+}
+.popup-close:hover {
+    color: #aebcc3;
+}
+.popup-wrapper {
+    background: #fff;
+    width: 55%;
+    max-width: 800px;
+    margin: 10% auto;
+    text-align: center;
+    position: relative;
+    z-index: 1006;
+    display: none;
+}
+.popup-body {
+    padding: 2.5em 3em 1em;
+    text-align: center;
+    width: 100%;
+    background: #fff;
+}
+.popup-body h2 {
+    font-size: 2.5em;
+}
+.popup-header {
+    background: #f1f5f7;
+    padding: 2.5em 3em 1em;
+    color: #546975;
+}
+.popup-header h2 {
+    margin: 0 0 .15em;
+    font-size: 3em;
+    line-height: 1.14em;
+}
+.popup-header p {
+    margin: 0 0 1em;
+}
+.error-signup {
+    text-align: center;
+    color: #FFF;
+    top: 140px;
+    font-size: 13px;
+    background: #333;
+    padding: 8px 10px 11px;
+    border-radius: 20px;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    width: 260px;
+    margin: 0 auto;
+    line-height: 22px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    display: none;
+    z-index: 1000;
+}
+#signup-popup-form, #social-login {
+    position: relative;
+    width: 50%;
+    float: left;
+}
+#social-login {
+    padding: 0 2em 0 0;
+}
+#social-login p {
+    margin: 0;
+    text-align: center;
+    font-size: 13px;
+}
+#signup-popup-form {
+    border-left: 1px solid #dde6ea;
+    padding: 0 0 0 2em;
+}
+#signup-popup-form input {
+    width: 100%;
+    background: #fff;
+    border: 1px solid #d5dce0;
+    border-radius: 4px;
+    padding: .55em .5em;
+    color: #546975;
+    font-weight: 500;
+    font-size: 19px;
+    margin-bottom: .2em;
+    height: 2.9em;
+    box-shadow: inset 0 0 0 rgba(0, 0, 0, .1);
+}
+.sign-in-checkbox {
+    padding: 5px;
+    margin: 3px auto;
+}
+.sign-in-checkbox .sign-in-checkbox-input {
+    width: 20px!important;
+}
+.sign-in-checkbox span {
+    font-size: 13px;
+    color: #8A8888;
+    margin: 7px;
+    float: right;
+    padding: 13px;
+    possition: absolute;
+}
+#signup-popup-form input.error {
+    background: #ffd4d7;
+    border: 1px solid #f89497;
+}
+.popup-body .button {
+    height: 50px;
+    width: 100%;
+    cursor: pointer;
+    cursor: hand;
+    float: left;
+    border-radius: 0px;
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
+    margin-top: 10px;
+    line-height: 50px;
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+    text-transform: uppercase;
+    transition: all 0.2s ease 0s;
+}
+.button.button-google {
+    background: #FF5A5A;
+}
+.button.button-facebook {
+	background: #577BC9;
+}
+.button.button-facebook:hover {
+    background: #6690cb;
+}
+.button.inactive {
+    background: #dde6ea;
+    color: #8d9ba2;
+}
+.button.inactive:hover {
+    color: #fff;
+}
+.signup_popup_window {
+    display: block;
+    left: 50%;
+    margin-left: -458px;
+    position: absolute;
+    top: 60px;
+    width: 935px;
+    height: 650px;
+    z-index: 1001;
+}
+.button-google:hover {
+    background: #ed6e6e;
+}
+@media screen and (max-width:480px) {
+    #social-login {
+    width: 100%;
+    padding: 0;
+}
+#signup-popup-form {
+    border-top: 1px solid #dde6ea;
+    width: 100%;
+    margin-top: 10px;
+    border-left: none;
+    padding: 0;
+}
+form#login_form {
+    margin-top: 12px;
+}
+.popup-header {
+    background: #f1f5f7;
+    padding: 2.5em 2em 1em;
+    color: #546975;
+}
+.popup-header h2 {
+    margin: 0 0 .15em;
+    font-size: 1.8em;
+}
+.popup-wrapper {
+    width: 85%}
+#backgroundPopup {
+    position: absolute!important;
+     top: 0px;
+}
+#signup .button {
+    font-size: 17px;
+}
+.popup-body {
+    padding: 1em 3em;
+}
+.sign-in-checkbox span {
+    font-size: 13px;
+    color: #8A8888;
+    margin: 12px 0 0 10px;
+    float: right;
+    padding: 0;
+    position: absolute;
+}
+}@media (min-width:481px) and (max-width:600px) {
+    #social-login {
+    width: 100%;
+    padding: 20px;
+}
+#signup-popup-form {
+    border-top: 1px solid #dde6ea;
+    width: 100%;
+    margin-top: 5px;
+    border-left: none;
+    padding: 20px;
+}
+form#login_form {
+    margin-top: 6px;
+}
+.popup-header {
+    background: #f1f5f7;
+    padding: 2.5em 3em 1em;
+    color: #546975;
+}
+.popup-wrapper {
+    width: 85%}
+.popup-header h2 {
+    font-size: 2em;
+}
+.popup-close {
+    top: 12px;
+}
+.popup-body {
+    padding: .5em 3em 1em;
+}
+.popup-header p {
+    font-size: 1em;
+}
+.sign-in-checkbox span {
+    font-size: 13px;
+    color: #8A8888;
+    margin: 12px 0 0 10px;
+    float: right;
+    padding: 0;
+    position: absolute;
+}
+#signup .button {
+    line-height: .8em;
+}
+#signup-popup-form input {
+    height: 2.5em;
+}
+}@media (min-width:601px) and (max-width:767px) {
+    div#backgroundPopup  {
+    top:  0px;
+    position:  absolute;
+}
+.popup-wrapper {
+    width: 90%}
+.popup-header h2 {
+    font-size: 2em;
+}
+.sign-in-checkbox span {
+    position: absolute;
+}
+#signup .button {
+    font-size: 17px;
+}
+}@media (min-width:768px) {
+    .popup-wrapper {
+    position: fixed;
+    height: 200px;
+    width: 85%;
+    margin: -100px 0 0 -375px;
+    top: 25%;
+    left: 50%}
+.sign-in-checkbox span {
+    position: absolute;
+}
+}
+
