@@ -63,20 +63,21 @@ public class TodoMain {
 		List<GooglePojo> results = (List<GooglePojo>) q.execute();
 
 		if (!(results.isEmpty())) {
-			q.setFilter("password == '" + password + "'");
-			results = (List<GooglePojo>) q.execute();
-			if (!(results.isEmpty())) {
-				for (GooglePojo obj : results) {
-					String name = obj.getName();
+			for (GooglePojo obj : results) {
+				String BackendPassword = obj.getPassword();
+				String name = obj.getName();
+				if (password.equals(BackendPassword)) {
 					HttpSession session = request.getSession();
 					session.setAttribute("email", email);
 					session.setAttribute("givenName", name);
 					response.sendRedirect("/index");
+					return "Success";
+				} else {
+					return "passwordFailure";
 				}
-				return "Success";
-			} else {
-				return "passwordFailure";
+
 			}
+			return "Success";
 
 		}
 
@@ -126,16 +127,17 @@ public class TodoMain {
 		Query q = pm.newQuery(GooglePojo.class);
 		q.setFilter("email == '" + email + "'");
 		List<GooglePojo> results = (List<GooglePojo>) q.execute();
-
 		// Checking Email and password Exists/Not
 		if (!(results.isEmpty())) {
-			q.setFilter("password == '" + password + "'");
-			results = (List<GooglePojo>) q.execute();
-			if (!(results.isEmpty())) {
-				return "Success";
-			} else {
-				return "passwordFailure";
+			for (GooglePojo obj : results) {
+				String BackendPassword = obj.getPassword();
+				if (password.equals(BackendPassword)) {
+					return "Success";
+				} else {
+					return "passwordFailure";
+				}
 			}
+			return "Success";
 		}
 
 		else {

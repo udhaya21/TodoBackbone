@@ -143,6 +143,7 @@ a {
 	border-radius: 4px;
 	padding: 1em 2em;
 	line-height: 1.75em;
+	cursor: pointer;
 }
 
 .cta:hover {
