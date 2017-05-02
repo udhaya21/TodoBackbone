@@ -1,12 +1,6 @@
 package com.testing;
 
 import java.io.BufferedReader;
-
-import com.google.appengine.labs.repackaged.org.json.JSONObject;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import java.lang.reflect.Type;
-
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -26,30 +20,22 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.googlecode.objectify.ObjectifyService;
-import com.testing.GooglePojo;
-import com.testing.GsonUtility;
-import com.testing.PMF;
-import com.testing.Setup;
+import com.google.appengine.labs.repackaged.org.json.JSONObject;
+import com.google.gson.Gson;
 
 @Controller
 public class TodoMain {
 	PersistenceManager pm = PMF.get().getPersistenceManager();
 
-	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public @ResponseBody String todoSaveOnEnter(HttpServletRequest request, HttpServletResponse response,
-			@RequestBody String todoJsonObj) throws IOException, ServletException {
-		Gson gson = new Gson();
-		TodoBackbone todoSave = gson.fromJson(todoJsonObj, TodoBackbone.class);
-		ObjectifyService.ofy().save().entity(todoSave).now();
-		return "Saved";
+	@RequestMapping(value = "/fetchQuery", method = RequestMethod.POST)
+	public @ResponseBody void fetchQuery(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
+
 	}
 
 	@SuppressWarnings("unchecked")
@@ -165,28 +151,6 @@ public class TodoMain {
 		}
 	}
 
-	@RequestMapping(value = "/fetch", method = RequestMethod.GET)
-	public @ResponseBody String todoFetchOnLoad(HttpServletRequest request, HttpServletResponse response)
-			throws IOException, ServletException {
-		HttpSession session = request.getSession(false);
-		String LoggedInUser = (String) session.getAttribute("email");
-		List<TodoBackbone> todoList = ObjectifyService.ofy().load().type(TodoBackbone.class)
-				.filter("email =", LoggedInUser).list();
-		Gson gson = new Gson();
-		Type type = new TypeToken<List<TodoBackbone>>() {
-		}.getType();
-		String todoJsonObj = gson.toJson(todoList, type);
-		session.setAttribute("todoJsonObj", todoJsonObj);
-		return todoJsonObj;
-	}
-
-	@RequestMapping(value = "/save/{key}", method = RequestMethod.DELETE)
-	public @ResponseBody String todoDelete(HttpServletRequest request, HttpServletResponse response,
-			@PathVariable String key) throws IOException, ServletException {
-		ObjectifyService.ofy().delete().type(TodoBackbone.class).id(key).now();
-		return "deleted";
-	}
-
 	@RequestMapping(value = "/oauth2callback", method = RequestMethod.GET)
 	public void oauthcallback(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
@@ -275,12 +239,12 @@ public class TodoMain {
 			try {
 				String rid = request.getParameter("request_ids");
 				if (rid != null) {
-					response.sendRedirect("https://www.facebook.com/v2.8/dialog/oauth?client_id="
+					response.sendRedirect("https://www.facebook.com/v2.9/dialog/oauth?client_id="
 							+ FacebookCreds.CLIENT_ID + "&redirect_uri=" + FacebookCreds.REDIRECT_URI + "");
 				} else {
 					String code = request.getParameter("code");
 					if (code != null) {
-						URL url = new URL("https://graph.facebook.com/v2.8/oauth/access_token?client_id="
+						URL url = new URL("https://graph.facebook.com/v2.9/oauth/access_token?client_id="
 								+ FacebookCreds.CLIENT_ID + "&redirect_uri=" + FacebookCreds.REDIRECT_URI
 								+ "&client_secret=" + FacebookCreds.CLIENT_SECRET + "&code=" + code);
 						HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -295,7 +259,7 @@ public class TodoMain {
 						JSONObject info = new JSONObject(outputString);
 						String accessToken = (String) info.getString("access_token");
 						url = new URL(
-								"https://graph.facebook.com/v2.8/me?fields=gender,email,first_name,last_name,id,picture&access_token="
+								"https://graph.facebook.com/v2.9/me?fields=gender,email,first_name,last_name,id,picture&access_token="
 										+ accessToken);
 						HttpURLConnection conn1 = (HttpURLConnection) url.openConnection();
 						conn1.setRequestMethod("GET");

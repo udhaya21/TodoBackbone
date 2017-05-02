@@ -128,7 +128,7 @@ input[type=checkbox].im-check:disabled+.im-validate,input[type=radio].im-radio:d
 @media only screen and (min-width:601px){
 .im-col.m1{width:8.33333%}
 .im-col.m2{width:16.66666%}
-.im-col.m3,.im-quarter{width:24.99999%}
+.im-col.m3,.im-quarter{width:24.99999%; cursor: pointer;}
 .im-col.m4,.im-third{width:33.33333%}
 .im-col.m5{width:41.66666%}
 .im-col.m6,.im-half{width:49.99999%}

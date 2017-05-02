@@ -8,12 +8,20 @@ import com.googlecode.objectify.annotation.Index;
 @Entity
 @Cache
 public class TodoBackbone {
-	// Logger log = Logger.getLogger(todoBackbone.class.getName());
-	// @Parent Key todoList;
 
-	
-	
-	@Index String email;
+	@Index
+	String status;
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	@Index
+	String email;
 
 	public String getEmailId() {
 		return email;
@@ -22,14 +30,25 @@ public class TodoBackbone {
 	public void setEmailId(String email) {
 		this.email = email;
 	}
-	
+
+	@Index
+	Integer order;
+
+	public Integer getOrder() {
+		return order;
+	}
+
+	public void setOrder(Integer order) {
+		this.order = order;
+	}
+
 	@Id
 	String key;
-	
-	
 
-	@Index String title;
-	@Index Boolean completed;
+	@Index
+	String title;
+	@Index
+	Boolean completed;
 
 	public String getId() {
 		return key;

@@ -1,16 +1,16 @@
 /*global Backbone */
 var app = app || {};
 
-(function () {
+(function() {
 	'use strict';
 
 	// Todo Router
 	// ----------
 	var TodoRouter = Backbone.Router.extend({
-		routes: {
-			'': 'noHashTagURL'
+		routes : {
+			'' : 'noHashTagURL'
 		},
-		noHashTagURL: function(){
+		noHashTagURL : function() {
 			var mainView = new app.MainView();
 		}
 	});

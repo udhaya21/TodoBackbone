@@ -12,10 +12,6 @@
 	response.setHeader("Cache-Control", "no-store");
 	response.setHeader("Pragma", "no-cache");
 	response.setDateHeader("Expires", 0);
-	if (session.getAttribute("email") == null) {
-		response.sendRedirect(request.getContextPath() + "/home");
-
-	}
 %>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="js/jquery-min.js"></script>
@@ -24,6 +20,8 @@
 
 <%
 	String userName = (String) session.getAttribute("givenName");
+	String cursor = (String) session.getAttribute("cursor");
+	System.out.println(cursor);
 	String loggedInUser = (String) session.getAttribute("email");
 	if (request.getSession().getAttribute("email") == null) {
 		response.sendRedirect("/home");
@@ -34,8 +32,21 @@
 <script type="text/javascript">
     (function(){
     	if (window.location.hash && window.location.hash == '#_=_'){
-        window.location.hash = '';
+        window.location = '';
+    	}
+        else if (window.location.hash && window.location.hash == '#todoapp'){
+            window.location = '';
+    }else if (window.location.hash && window.location.hash == '#home'){
+            window.location = '';
+    }else if (window.location.hash && window.location.hash == '#about'){
+            window.location = '';
     }
+    else if (window.location.hash && window.location.hash == '#mycollections'){
+        window.location = '';
+	}else if (window.location.hash && window.location.hash == '#contact'){
+            window.location = '';
+    }
+    	
     })();
 </script>
 <script>
@@ -57,6 +68,9 @@
 var email = '<%=loggedInUser%>';
 </script>
 <style type="text/css">
+body{
+    background-image: linear-gradient(90deg,#00a1ff 0,#5a41e2 100%);
+}
 .signout {
 	position: relative;
 	bottom: 115px;
@@ -68,8 +82,19 @@ var email = '<%=loggedInUser%>';
 	font-size: 36px;
 	color: #9C27B0;
 	cursor: pointer;
+    color: rgba(245, 255, 92, 0.7);
 }
 
+.signout-icon:hover{
+    	color: rgb(245, 255, 92);
+    
+}
+
+ul#all
+{
+	overflow: auto;
+    max-height: 200px;
+}
 .new {
 	position: relative;
 	margin: 0;
@@ -136,14 +161,15 @@ var email = '<%=loggedInUser%>';
 }
 
 .allheader {
-	background: rgba(209, 0, 0, 0.62);
-	text-align: center;
+    background: rgb(18, 45, 68);
+    text-align: center;
 	height: 40px;
 }
 
 .allh1 {
 	position: relative;
 	top: 7px;
+	color:#fff;
 }
 
 .new {
@@ -184,9 +210,9 @@ var email = '<%=loggedInUser%>';
 	top: -155px;
 	width: 100%;
 	font-size: 100px;
-	font-weight: 100;
+	font-weight: 200;
 	text-align: center;
-	color: rgba(175, 47, 47, 0.71);
+	color: rgb(255, 255, 255);
 	-webkit-text-rendering: optimizeLegibility;
 	-moz-text-rendering: optimizeLegibility;
 	text-rendering: optimizeLegibility;
@@ -271,6 +297,7 @@ body {
 	float: left;
 	position: relative;
 	top: 100px;
+	left:500px;
 }
 
 .active {
@@ -401,8 +428,11 @@ button {
 	bottom: 150px;
 	left: 20px;
 	font-size: 30px;
+	color: #fff;
 }
-
+.hide{
+	display:none;
+}
 .p-name {
 	float: left;
 	position: relative;
@@ -412,21 +442,42 @@ button {
 }
 </style>
 </head>
-<body>
+<body style="background-image: linear-gradient(90deg,#00a1ff 0,#5a41e2 100%);" onload="load();">
 	<div>
 		<p class="p-hi">
 			Hello!
 			<%=userName%></p>
 	</div>
 	<div class="signout">
-		<a onclick="logOut();"><i class="fa fa-power-off signout-icon"></i></a>
+		<a onclick="logOut();"><i class="fa fa-power-off signout-icon" id="signout"></i></a>
 	</div>
 	<div class="todoBody"></div>
 	<div>
-		<section class="all" id="all"> </section>
+		<section class="all" id="all">
+			<header class="allheader">
+			<h1 class="allh1">Task<h1></header>
+			<ul id="all" class="todoList">
+			</ul>
+		 </section>
 		<section class="active" id="active"> </section>
 		<section class="completed" id="completed"> </section>
 	</div>
+	<script type="text/template" id="singleTodoView">
+					<li id="<@=key@>" class="list <@=key!=null ? 'color' :'' @> <@=status!="inactive" ? '' :'hide' @>">
+					<input id="<@=key @>" class="toggle" type="checkbox"  <@= completed ? 'checked' : '' @> />
+					<label class="label <@= completed ? 'toggleCompleted' : '' @>"  id="<@=key @>"><@=title@></label>
+					<button class="destroy" id="<@=key @>"></button>
+					<input class="edit <@=key @>" id="<@=key @>" value="<@=title@>" onfocus="this.value = this.value;">
+				</li>		
+		</script>
+	   <script>
+		_.templateSettings = {
+		interpolate : /\<\@\=(.+?)\@\>/gim,
+		evaluate : /\<\@([\s\S]+?)\@\>/gim,
+		escape : /\<\@\-(.+?)\@\>/gim
+		};
+</script>
+	
 	<script type="text/template" id="mainView">
 		<div id="todoapp" class="todoapp">
 		<h1>Todo</h1>
@@ -436,29 +487,65 @@ button {
 		</div>
 		</script>
 	<script type="text/template" id="all-list-view">
-			<header class="allheader"><h1 class="allh1">ALL<h1></header>
-			<ul id="all">
+			
 			<@ var myCollection = todoCollection.models;@>
 			<@ _.each(myCollection, function(todoItem) { 
 			@>
-         		<li class="list <@=(todoItem.get("key"))!=null ? 'color' :'' @>">
+         		<li id="<@=todoItem.get("key")@>" class="list <@=(todoItem.get("key"))!=null ? 'color' :'' @> <@=(todoItem.get("status"))!="inactive" ? '' :'hide' @>">
 					<input id="<@=todoItem.get("key") @>" class="toggle" type="checkbox"  <@= todoItem.get("completed") ? 'checked' : '' @> />
 					<label class="label <@= todoItem.get("completed") ? 'toggleCompleted' : '' @>"  id="<@=todoItem.get("key") @>"><@=todoItem.get("title")@></label>
 					<button class="destroy" id="<@=todoItem.get("key") @>"></button>
 					<input class="edit <@=todoItem.get("key") @>" id="<@=todoItem.get("key") @>" value="<@-todoItem.get("title")@>" onfocus="this.value = this.value;">
 				</li>
 				
-				<hr>
     		<@ }); @>
-			</ul>
+			
 		</script>
 <script>
+function load(){
+	<% 
+		session = request.getSession(false);
+	   	session.setAttribute("cursor",null);
+	 %>
+
+}
 function logOut() {
     var x;
     if (confirm("Press OK to Logout") == true) {
         window.location = "/signOut"
     }
 }
+
+$(document).ready(function(){
+	
+	//var fireObj = firebase.database().ref("Todo/").remove();
+	
+	jQuery(function($) {
+
+	    $('ul#all').on('scroll', function() {
+	        if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
+	        	todoCollectionCursor.fetch({
+	    			success: function(collection, response, options) {
+	    				var myCollections = collection.models;
+	    				_.each(myCollections , function(model){
+	    					model.toJSON();
+	    					var newKey = model.get("key");
+	    					var existing = todoCollection.findWhere({key : newKey});
+	    					if(todoCollection.contains(existing)){
+	    						return;
+	    					}else{
+	    					todoCollection.push(model);
+	    					}
+	    				});			
+	    			}
+	    		});
+	        }
+	        
+	        todoCollection.sort();
+	    })
+	});
+})
+
 </script>
 	<script src="views/allListView.js"></script>
 	<script src="views/router.js"></script>
