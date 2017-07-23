@@ -1,9 +1,6 @@
 package com.testing;
 
 import java.io.IOException;
-import com.google.appengine.api.datastore.Cursor;
-import com.google.appengine.api.datastore.QueryResultIterator;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,14 +15,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.appengine.api.datastore.Cursor;
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.EntityNotFoundException;
+import com.google.appengine.api.datastore.QueryResultIterator;
 import com.google.gson.Gson;
 import com.googlecode.objectify.ObjectifyService;
+import com.googlecode.objectify.cache.CachingDatastoreServiceFactory;
 import com.googlecode.objectify.cmd.Query;
 
 @Controller
 public class ObjectifyActions {
 	
-
+	@RequestMapping(value = "/cachedData", method = RequestMethod.GET)
+	public void cachedData(HttpServletRequest request, HttpServletResponse response) throws EntityNotFoundException{
+		DatastoreService ds = CachingDatastoreServiceFactory.getDatastoreService();
+		System.out.println(ds);
+		System.out.println(ObjectifyService.ofy().load().entity(TodoBackbone.class));
+		TodoBackbone tb = new TodoBackbone();
+		//ObjectifyService.ofy().load().entity(TodoBackbone.class);
+	}
 	@RequestMapping(value = "/fetch", method = RequestMethod.GET)
 	public @ResponseBody String fetchBasedOnCursor(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
@@ -69,5 +78,6 @@ public class ObjectifyActions {
 		ObjectifyService.ofy().save().entity(todoSave).now();
 		return "Saved";
 	}
+	
 
 }

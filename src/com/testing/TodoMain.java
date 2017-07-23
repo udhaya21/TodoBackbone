@@ -19,13 +19,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.google.appengine.labs.repackaged.org.json.JSONObject;
 import com.google.gson.Gson;
 
 @Controller
@@ -297,7 +297,7 @@ public class TodoMain {
 		ModelAndView mav = new ModelAndView("index");
 		return mav;
 	}
-
+	
 	@RequestMapping(value = { "/index2" })
 	public ModelAndView index2() {
 		ModelAndView mav = new ModelAndView("index2");
@@ -313,6 +313,17 @@ public class TodoMain {
 	@RequestMapping(value = { "/googleLogin" })
 	public ModelAndView googleLogin() {
 		ModelAndView mav = new ModelAndView("googleLogin");
+		return mav;
+	}
+	
+	/*
+	 * The request to map the SpecRunner
+	 */
+		
+	
+	@RequestMapping(value = { "/SpecRunner" })
+	public ModelAndView specRunner() {
+		ModelAndView mav = new ModelAndView("SpecRunner");
 		return mav;
 	}
 

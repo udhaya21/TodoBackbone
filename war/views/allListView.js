@@ -3,6 +3,9 @@ var app = app || {};
 app.TodoModel = Backbone.Model.extend({
 
 	idAttribute : '_key',
+	initialize : function(){
+		this.helloWorld();
+	},
 	defaults : {
 		title : "No title",
 		completed : false,
@@ -10,7 +13,7 @@ app.TodoModel = Backbone.Model.extend({
 	// order: app.TodoCollection.nextOrder()
 	},
 	urlRoot : '/save',
-
+	
 	toggle : function(attr, silent) {
 		var setter = {};
 		setter[attr] = !this.get(attr);
@@ -18,32 +21,33 @@ app.TodoModel = Backbone.Model.extend({
 			silent : true
 		} : {});
 	},
+	
+	helloWorld : function(){
+		console.log('Hello World');
+		return 'Hello World';
+	}
 
 });
 
 var TodoCollection = Backbone.Collection.extend({
 	model : app.TodoModel,
 	url : '/fetch',
-
 	comparator : 'order'
 });
 
 var todoCollection = new TodoCollection();
 var todoCollectionCursor = new TodoCollection();
 
-app.AllView = Backbone.View
-		.extend({
+app.AllView = Backbone.View.extend({
 			el : ".todoList",
 			collection : todoCollection,
 			initialize : function() {
-
 				this.updateFireObj();
 				this.removeListen();
 				this.listenTo(this.model, "change", this.render);
 				this.listenTo(this.model, "add", this.render);
 
 			},
-
 			events : {
 				'click .toggle' : 'toggleCompletedCheck',
 				'click .destroy' : 'clear',
@@ -54,8 +58,7 @@ app.AllView = Backbone.View
 			},
 			render : function(option) {
 				this.option = option ? option : {};
-				var template = _
-						.template(
+				var template = _.template(
 								$('#all-list-view').html(),
 								{
 									todoCollection : this.option.collection ? this.option.collection.models

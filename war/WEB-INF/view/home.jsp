@@ -576,7 +576,7 @@ body, html {
                                         <a class="button button-facebook" href="https://www.facebook.com/v2.9/dialog/oauth? &redirect_uri=https://todo-dot-website-imagic.appspot.com/facebookLogin&response_type=code&display=popup&client_id=155149575014412&scope=email">Sign in with Facebook</a>
                                     </div>
                                     <div>
-                                        <a class="button button-google" href="https://accounts.google.com/o/oauth2/v2/auth?scope=email profile&redirect_uri=http://localhost:8888/oauth2callback&response_type=code&client_id=477743159334-md889q8177sdgpb22t3l3ce5jsjmonm7.apps.googleusercontent.com" class="button-content">Sign in with Google</a>
+                                        <a class="button button-google" href="https://accounts.google.com/o/oauth2/v2/auth?scope=email profile&redirect_uri=https://todo-dot-website-imagic.appspot.com/oauth2callback&response_type=code&client_id=477743159334-md889q8177sdgpb22t3l3ce5jsjmonm7.apps.googleusercontent.com" class="button-content">Sign in with Google</a>
                                     </div>
                                     <div>
                                         <button class="alreadybutton" class="button-content">Already have an account</button>
