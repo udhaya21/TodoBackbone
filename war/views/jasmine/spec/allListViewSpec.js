@@ -5,6 +5,6 @@ describe("Hello World", function(){
 	
 
 	it("should Return Hello World",function(){ 
-	      expect(helloWorld()).toEqual('Hello World'); 
+	      expect(helloWorld()).toMatch("Hello World"); 
 	   }); 
 });

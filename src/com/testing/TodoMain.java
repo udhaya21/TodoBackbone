@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
@@ -326,5 +327,17 @@ public class TodoMain {
 		ModelAndView mav = new ModelAndView("SpecRunner");
 		return mav;
 	}
+	
+	@RequestMapping(value = { "/ajaxcall" })
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
+		      throws ServletException, IOException {
+		      
+		      // Set response content type
+		      response.setContentType("text/html");
+
+		      // Actual logic goes here.
+		      PrintWriter out = response.getWriter();
+		      out.println("Ajax Called");
+		   }
 
 }
