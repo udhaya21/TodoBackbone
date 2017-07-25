@@ -18,14 +18,12 @@
   	<script src="views/jasmine/lib/jasmine/boot.js"></script>
 
   	<!-- include source files here... -->
-  	<script src="views/allListView.js"></script>
   	<script src="views/jasmine/src/MathUtils.js"></script>
-  	<script src="views/jasmine/src/mockajax.js"></script>
+  	 <script src="views/jasmine/src/ajaxCall.js"></script>
 	
   	<!-- include spec files here... -->
-  	<script src="views/jasmine/spec/allListViewSpec.js"></script>
-  	<script src="views/jasmine/spec/MathUtils.js"></script>  	
-  	<script src="views/jasmine/spec/ajaxSpec.js"></script>
+  	<script src="views/jasmine/spec/MathUtilsSpec.js"></script>  
+  	<script src="views/jasmine/spec/ajaxCallSpec.js"></script>  	
   	
 </head>
 

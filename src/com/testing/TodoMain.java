@@ -298,7 +298,7 @@ public class TodoMain {
 		ModelAndView mav = new ModelAndView("index");
 		return mav;
 	}
-	
+
 	@RequestMapping(value = { "/index2" })
 	public ModelAndView index2() {
 		ModelAndView mav = new ModelAndView("index2");
@@ -316,28 +316,21 @@ public class TodoMain {
 		ModelAndView mav = new ModelAndView("googleLogin");
 		return mav;
 	}
-	
+
 	/*
 	 * The request to map the SpecRunner
 	 */
-		
-	
+
 	@RequestMapping(value = { "/SpecRunner" })
 	public ModelAndView specRunner() {
 		ModelAndView mav = new ModelAndView("SpecRunner");
 		return mav;
 	}
-	
-	@RequestMapping(value = { "/ajaxcall" })
-	public void doGet(HttpServletRequest request, HttpServletResponse response)
-		      throws ServletException, IOException {
-		      
-		      // Set response content type
-		      response.setContentType("text/html");
 
-		      // Actual logic goes here.
-		      PrintWriter out = response.getWriter();
-		      out.println("Ajax Called");
-		   }
+	@RequestMapping(value = { "/ajaxcall" })
+	public String doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		return "Ajax Called";
+	}
 
 }
