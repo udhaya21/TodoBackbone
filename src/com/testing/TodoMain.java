@@ -327,10 +327,14 @@ public class TodoMain {
 		return mav;
 	}
 
-	@RequestMapping(value = { "/ajaxcall" })
-	public String doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+	@RequestMapping(value = { "/ajaxcall" }, method = RequestMethod.GET)
+	public @ResponseBody String ajaxCalled()
+	{
 		return "Ajax Called";
 	}
+//	public String doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//
+//		return "Ajax Called";
+//	}
 
 }
