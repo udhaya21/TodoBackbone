@@ -100,6 +100,57 @@ describe("Testing", function(){
 		expect(a).toBeGreaterThan(99);
 	});
 	
+	it("toBeCloseTo should check whether the input is closer", function() {
+		expect(10.77).toBeCloseTo(11,0);
+	});
+	
+	it("toThrow should check whether the function throws", function() {
+		
+		var add = function() {
+			return 2+1;
+		};
+		
+		var addError = function(){
+			return a+1;
+		};
+		
+		var throwError = function(){
+			throw 'Error_occurred';
+		};
+		
+		expect(add).not.toThrow();
+		//expect(addError).toThrow();
+		expect(throwError).toThrow('Error_occurred');
+	});
+	
+	it("toThrowError should check whether specific expection thrown", function() {
+		var myTest = function() {
+			throw new TypeError("Setmore Free Premium");
+		};
+		
+		expect(myTest).toThrowError("Setmore Free Premium");
+		expect(myTest).toThrowError(TypeError);
+		expect(myTest).toThrowError(/Free/);
+	});
+	
+	describe("A spec using the fail function", function() {
+		  var myFailFunction = function(x, callBack) {
+		    if (x) {
+		      callBack();
+		    }
+		  };
+		  
+		  var callBack = function(){
+			  console.log("Callback function is called");
+		  };
+
+		  it("should not call the callBack", function() {
+			  myFailFunction(false, function() {
+				  fail("Callback has been called");
+		    });
+		  });
+		});
+	
 	afterEach(function(){
 		a = 0;
 		b = 0;
@@ -107,5 +158,17 @@ describe("Testing", function(){
 });
 
 /*
- * 
+ * Disabling a spec
  */
+	
+	xdescribe("This spec", function() {
+		it("should not run", function(){
+			expect(1).toBeTruthy();
+		});
+	});
+	
+	describe("This spec", function() {
+		xit("should be pending", function(){
+			expect(1).toBeTruthy();
+		});
+	});
