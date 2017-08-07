@@ -36,7 +36,7 @@ describe("Function should be ", function() {
 
 
 /*
- * 
+ * Testing matchers 
  */
 
 describe("Testing", function(){
@@ -162,7 +162,7 @@ describe("Testing", function(){
  */
 	
 	xdescribe("This spec", function() {
-		it("should not run", function(){
+		it("should not run", function() {
 			expect(1).toBeTruthy();
 		});
 	});
@@ -172,3 +172,113 @@ describe("Testing", function(){
 			expect(1).toBeTruthy();
 		});
 	});
+	
+/*
+ * Spies
+ */
+	describe("Testing when a spy configured to callThrough", function() {
+		var obj,val,returnValue;
+		
+		beforeEach(function(){
+			obj = {
+					setValue : function(value) {
+						val = value;
+					},
+					getValue : function() {
+						return val;
+					}
+				};
+			spyOn(obj,'getValue').and.callThrough();
+			obj.setValue("Full_Creative");
+			returnValue = obj.getValue();
+		});
+		
+		it("whether the spy was called", function() {
+			expect(obj.getValue).toHaveBeenCalled();
+		});
+		
+		it("should not affect other functions", function () {
+			expect(val).toEqual("Full_Creative");
+		})
+		
+		it("when called returns the requested value", function() {
+			expect(returnValue).toEqual("Full_Creative");
+		});
+	});
+
+	describe("Testing when a spy configured to returnValue", function() {
+		var obj,val,returnValue;
+		
+		beforeEach(function(){
+			obj = {
+					setValue : function(value) {
+						val = value;
+					},
+					getValue : function() {
+						return val;
+					}
+				};
+			spyOn(obj,'getValue').and.returnValue("Full_Creative");
+			obj.setValue("Full_Creative");
+			returnValue = obj.getValue();
+		});
+		
+		it("whether the spy was called", function() {
+			expect(obj.getValue).toHaveBeenCalled();
+		});
+		
+		it("should not affect other functions", function () {
+			expect(val).toEqual("Full_Creative");
+		})
+		
+		it("when called returns the requested value", function() {
+			expect(returnValue).toEqual("Full_Creative");
+		});
+	});
+	
+	describe("Spy when configured to fake a series of return values", function() {
+		beforeEach(function(){
+			obj = {
+					setValue : function(value) {
+						val = value;
+					},
+					getValue : function() {
+						return val;
+					}
+				};
+			spyOn(obj,'getValue').and.returnValues("Full_Creative","Setmore");
+			obj.setValue("Jasmine");
+			
+		});
+		
+		it("whether the spy was called", function() {
+			obj.getValue("Full_Creative")
+		})
+	})
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
