@@ -1,8 +1,8 @@
-<!-- Indices written at Mon, 17 Jul 2017 22:49:13 IST -->
+<!-- Indices written at Wed, 9 Aug 2017 01:26:54 IST -->
 
 <datastore-indexes>
 
-    <!-- Used 12 times in query history -->
+    <!-- Used 1 time in query history -->
     <datastore-index kind="TodoBackbone" ancestor="false" source="auto">
         <property name="email" direction="asc"/>
         <property name="order" direction="asc"/>

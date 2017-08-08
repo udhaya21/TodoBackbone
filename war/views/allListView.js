@@ -1,11 +1,11 @@
 var app = app || {};
-
+var loginDetails = function(){
+	var loginEmail = email;
+	console.log(loginEmail);
+};
 app.TodoModel = Backbone.Model.extend({
 
 	idAttribute : '_key',
-	initialize : function(){
-		this.helloWorld();
-	},
 	defaults : {
 		title : "No title",
 		completed : false,
@@ -22,10 +22,6 @@ app.TodoModel = Backbone.Model.extend({
 		} : {});
 	},
 	
-	helloWorld : function(){
-		console.log('Hello World');
-		return 'Hello World';
-	}
 
 });
 

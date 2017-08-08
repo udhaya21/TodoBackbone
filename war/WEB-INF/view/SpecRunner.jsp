@@ -19,9 +19,11 @@
 
   	<!-- include source files here... -->
   	 <script src="views/jasmine/src/source.js"></script>
+  	 <script src="views/allListView.js"></script>
 	
   	<!-- include spec files here... -->
   	<script src="views/jasmine/spec/spec.js"></script>  	
+  	<script src="views/jasmine/spec/allListViewSpec.js"></script>
   	
 </head>
 
