@@ -1,4 +1,5 @@
-var app = app || {};
+var app = app || {}; 
+
 var loginDetails = function(){
 	var loginEmail = email;
 	console.log(loginEmail);
@@ -10,10 +11,11 @@ app.TodoModel = Backbone.Model.extend({
 		title : "No title",
 		completed : false,
 		key : "",
+		returnValue : {}
 	// order: app.TodoCollection.nextOrder()
 	},
 	urlRoot : '/save',
-	
+	parse: function(response) {console.log(response); return response;},
 	toggle : function(attr, silent) {
 		var setter = {};
 		setter[attr] = !this.get(attr);
@@ -40,10 +42,11 @@ app.AllView = Backbone.View.extend({
 			initialize : function() {
 				this.updateFireObj();
 				this.removeListen();
+				//this.value();
 				this.listenTo(this.model, "change", this.render);
 				this.listenTo(this.model, "add", this.render);
-
 			},
+			parse: function(response) {console.log(response); return response;},
 			events : {
 				'click .toggle' : 'toggleCompletedCheck',
 				'click .destroy' : 'clear',
@@ -51,6 +54,10 @@ app.AllView = Backbone.View.extend({
 				'keypress .edit' : 'updateOnEnter',
 				'keydown .edit' : 'revertOnEscape',
 				'blur .edit' : 'editBlur',
+			},
+			value : function(){
+				console.log(returnValue);
+				return returnValue.responseText;
 			},
 			render : function(option) {
 				this.option = option ? option : {};
@@ -77,7 +84,16 @@ app.AllView = Backbone.View.extend({
 				var status = this.model.get("status");
 				var completed = this.model.get("completed");
 				this.updateUserData(email, key, title, completed, status);
-				this.model.save();
+				this.model.save([],{
+					dataType:"text",
+					success:function(response) {
+						returnValue = response.changed.Saved.xhr.responseText; 
+						console.log(returnValue);
+						return returnValue;
+					},
+					error:function() {}
+					});
+				
 			},
 			editBlur : function(e) {
 				var key = $(e.currentTarget).attr("id");
