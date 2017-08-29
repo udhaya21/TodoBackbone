@@ -11,11 +11,12 @@ app.TodoModel = Backbone.Model.extend({
 		title : "No title",
 		completed : false,
 		key : "",
-		returnValue : {}
+		returnValue : {},
+		fetchReturn : {}
 	// order: app.TodoCollection.nextOrder()
 	},
 	urlRoot : '/save',
-	parse: function(response) {console.log(response); return response;},
+	//parse: function(response) {console.log(response); return response;},
 	toggle : function(attr, silent) {
 		var setter = {};
 		setter[attr] = !this.get(attr);
@@ -55,10 +56,6 @@ app.AllView = Backbone.View.extend({
 				'keydown .edit' : 'revertOnEscape',
 				'blur .edit' : 'editBlur',
 			},
-			value : function(){
-				console.log(returnValue);
-				return returnValue.responseText;
-			},
 			render : function(option) {
 				this.option = option ? option : {};
 				var template = _.template(
@@ -87,6 +84,7 @@ app.AllView = Backbone.View.extend({
 				this.model.save([],{
 					dataType:"text",
 					success:function(response) {
+						console.log(response);
 						returnValue = response.changed.Saved.xhr.responseText; 
 						console.log(returnValue);
 						return returnValue;
@@ -96,8 +94,12 @@ app.AllView = Backbone.View.extend({
 				
 			},
 			editBlur : function(e) {
+				console.log(e);
 				var key = $(e.currentTarget).attr("id");
 				var value = $(e.target).val();
+				//this.close("test","12345");
+				console.log(value);
+				console.log(key);
 				this.close(value, key);
 			},
 			edit : function(e) {
@@ -146,6 +148,8 @@ app.AllView = Backbone.View.extend({
 				}
 			},
 			close : function(value, key) {
+				console.log(value);
+				console.log(key);
 				var trimmedValue = value.trim();
 				if (!$('#' + key).hasClass('editing')) {
 					return;
@@ -169,7 +173,16 @@ app.AllView = Backbone.View.extend({
 				$('#' + key).removeClass('editing');
 				this.render(this.model);
 				this.updateUserData(email, key, title, completed, status);
-				this.model.save();
+				this.model.save([],{
+					dataType:"text",
+					success:function(response) {
+						console.log(response);
+						returnValue = response.changed.Saved.xhr.responseText; 
+						console.log(returnValue);
+						return returnValue;
+					},
+					error:function() {}
+					});
 			},
 			updateUserData : function(email, key, title, completed, status) {
 				var postData = {
@@ -234,20 +247,22 @@ app.allCollection = Backbone.Collection.extend({
 	model : new app.TodoModel()
 });
 
-app.MainView = Backbone.View
-		.extend({
+app.MainView = Backbone.View.extend({
 			el : ".todoBody",
 			collection : todoCollection,
 			initialize : function() {
 				todoCollectionCursor.fetch({
 					success : function(collection, response, options) {
+						console.log(collection);
+						console.log(response);
+						console.log(options);
 						var myCollections = collection.models;
 						_.each(myCollections, function(model) {
 							todoCollection.push(model);
 						});
 					}
 				});
-
+			
 				this.fetchFireObj();
 				this.option = {};
 				this.allRedCollection = new TodoCollection();

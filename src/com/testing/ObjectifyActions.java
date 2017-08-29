@@ -41,6 +41,7 @@ public class ObjectifyActions {
 		List<TodoBackbone> todoList = new ArrayList<TodoBackbone>();
 		HttpSession session = request.getSession(false);
 		String LoggedInUser = (String) session.getAttribute("email");
+		//LoggedInUser = "test@gmail.com";
 		Query<TodoBackbone> query = ObjectifyService.ofy().load().type(TodoBackbone.class)
 				.filter("email =", LoggedInUser).order("order").limit(5);
 

@@ -3,15 +3,30 @@
  */
 
 describe("Test for Backbone model", function() {
-	var todoModel, allView, mainView, success, valueReturned;
+	var todoModel, allView, mainView, success, valueReturned, responseTxt, fetchRespone;
 	
 	beforeEach(function() {
 		todoModel = new app.TodoModel();
 		allView	= new app.AllView();
 	});
-
+	
+	beforeAll(function(done){
+		setTimeout(function () {
+			todoCollectionCursor.fetch({
+				success : function(collection, response, options) {
+					valueReturned = options.xhr.responseText; 
+					return valueReturned;
+				}
+			});
+			done();
+		}, 1);
+	});
+	
+	afterEach(function(){
+		valueReturned = "";
+	});
+	
 	it("whether the functions are defined ", function() {
-		// spyOn(obj.TodoModel.prototype.toggle("test",true)).and.callThrough();
 		expect(allView).toBeDefined();
 		expect(todoModel.toggle).toBeDefined();
 		expect(allView.render).toBeDefined();
@@ -47,13 +62,15 @@ describe("Test for Backbone model", function() {
 		expect(todoModel.urlRoot).toEqual("/save");
 	});
 	
-	it("should check the functions", function() {
+	it("should check the toggleCompletedCheck to return response", function() {
 		spyOn(allView,'toggleCompletedCheck').and.returnValue("Saved");
 		valueReturned = allView.toggleCompletedCheck();
-		//console.log(valueReturned);
 		expect(allView.toggleCompletedCheck).toHaveBeenCalled();
 		expect(valueReturned).toEqual("Saved");
-		//expect(success).to();
 	});
 	
+	it("should check the fetch call", function() {
+		expect(typeof valueReturned).toEqual("string");
+	});
 });
+

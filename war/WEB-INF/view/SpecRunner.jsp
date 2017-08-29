@@ -17,7 +17,23 @@
 <script src="views/jasmine/lib/jasmine/jasmine.js"></script>
 <script src="views/jasmine/lib/jasmine/jasmine-html.js"></script>
 <script src="views/jasmine/lib/jasmine/boot.js"></script>
+<%
+	HttpSession session1 = request.getSession();
+	session1.setAttribute("givenName", "udhaya");
+	session1.setAttribute("email", "test@gmail.com");
+%>
+<script>
+function load(){
+	<% 
+		session = request.getSession(false);
+	   	session.setAttribute("cursor",null);
+	 %>
 
+}
+</script>
+<script>
+var email = "test@gmail.com";
+</script>
 <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></script>
 <script>
 	// Initialize Firebase
@@ -62,5 +78,6 @@
 </head>
 
 <body>
+
 </body>
 </html>
