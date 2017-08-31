@@ -233,7 +233,16 @@ app.AllView = Backbone.View.extend({
 				this.option.collection = todoCollection.add(this.model);
 				this.render();
 				this.updateUserData(email, key, title, completed, status);
-				this.model.save();
+				this.model.save([],{
+					dataType:"text",
+					success:function(response) {
+						console.log(response);
+						returnValue = response.changed.Saved.xhr.responseText; 
+						console.log(returnValue);
+						return returnValue;
+					},
+					error:function() {}
+					});
 				if (typeof model == "undefined") {
 					return;
 				}
@@ -260,6 +269,7 @@ app.MainView = Backbone.View.extend({
 						_.each(myCollections, function(model) {
 							todoCollection.push(model);
 						});
+						
 					}
 				});
 			
@@ -294,7 +304,16 @@ app.MainView = Backbone.View.extend({
 					this.model.set('status', status)
 					$(newItem).val("");
 					this.collection.add(this.model);
-					this.model.save();
+					this.model.save([],{
+						dataType:"text",
+						success:function(response) {
+							console.log(response);
+							returnValue = response.changed.Saved.xhr.responseText; 
+							console.log(returnValue);
+							return returnValue;
+						},
+						error:function() {}
+						});
 					var newModel = this.model.attributes;
 					this.writeUserData(newModel, key);
 					app.SingleTodoView = new app.singleTodoView();
@@ -361,7 +380,16 @@ app.MainView = Backbone.View.extend({
 				var self = this;
 				_.each(todoCollection.models, function(todoItem) {
 					todoItem.set("completed", status);
-					todoItem.save();
+					todoItem.save({
+							dataType:"text",
+							success:function(response) {
+								console.log(response);
+								returnValue = response.changed.Saved.xhr.responseText; 
+								console.log(returnValue);
+								return returnValue;
+							},
+							error:function() {}
+							});
 					self.allRedCollection.add(todoItem);
 				});
 			},
@@ -444,7 +472,16 @@ app.singleTodoView = Backbone.View
 				var status = this.model.get("status");
 				var completed = this.model.get("completed");
 				this.updateUserData(email, key, title, completed, status);
-				this.model.save();
+				this.model.save([],{
+					dataType:"text",
+					success:function(response) {
+						console.log(response);
+						returnValue = response.changed.Saved.xhr.responseText; 
+						console.log(returnValue);
+						return returnValue;
+					},
+					error:function() {}
+					});
 			},
 			editBlur : function(e) {
 				var key = $(e.currentTarget).attr("id");
@@ -519,7 +556,16 @@ app.singleTodoView = Backbone.View
 				$('#' + key).removeClass('editing');
 				this.render(this.model);
 				this.updateUserData(email, key, title, completed, status);
-				this.model.save();
+				this.model.save([],{
+					dataType:"text",
+					success:function(response) {
+						console.log(response);
+						returnValue = response.changed.Saved.xhr.responseText; 
+						console.log(returnValue);
+						return returnValue;
+					},
+					error:function() {}
+					});
 			},
 			updateUserData : function(email, key, title, completed, status) {
 				var postData = {
@@ -569,7 +615,16 @@ app.singleTodoView = Backbone.View
 				this.option.collection = todoCollection.add(this.model);
 				this.render();
 				this.updateUserData(email, key, title, completed, status);
-				this.model.save();
+				this.model.save([],{
+					dataType:"text",
+					success:function(response) {
+						console.log(response);
+						returnValue = response.changed.Saved.xhr.responseText; 
+						console.log(returnValue);
+						return returnValue;
+					},
+					error:function() {}
+					});
 				if (typeof model == "undefined") {
 					return;
 				}

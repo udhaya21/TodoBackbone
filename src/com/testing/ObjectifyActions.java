@@ -38,13 +38,15 @@ public class ObjectifyActions {
 	@RequestMapping(value = "/fetch", method = RequestMethod.GET)
 	public @ResponseBody String fetchBasedOnCursor(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
+		
+		response.setStatus(200);
 		List<TodoBackbone> todoList = new ArrayList<TodoBackbone>();
 		HttpSession session = request.getSession(false);
 		String LoggedInUser = (String) session.getAttribute("email");
 		//LoggedInUser = "test@gmail.com";
 		Query<TodoBackbone> query = ObjectifyService.ofy().load().type(TodoBackbone.class)
 				.filter("email =", LoggedInUser).order("order").limit(5);
-
+		System.out.println("Hi");
 		String cursorStr = (String) session.getAttribute("cursor");
 		if (cursorStr != null) {
 			query = query.startAt(Cursor.fromWebSafeString(cursorStr));

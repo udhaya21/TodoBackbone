@@ -17,6 +17,7 @@
 <script src="views/jasmine/lib/jasmine/jasmine.js"></script>
 <script src="views/jasmine/lib/jasmine/jasmine-html.js"></script>
 <script src="views/jasmine/lib/jasmine/boot.js"></script>
+<script src="js/mock-ajax.js"></script>
 <%
 	HttpSession session1 = request.getSession();
 	session1.setAttribute("givenName", "udhaya");

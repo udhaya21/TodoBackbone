@@ -10,17 +10,6 @@ describe("Test for Backbone model", function() {
 		allView	= new app.AllView();
 	});
 	
-	beforeAll(function(done){
-		setTimeout(function () {
-			todoCollectionCursor.fetch({
-				success : function(collection, response, options) {
-					valueReturned = options.xhr.responseText; 
-					return valueReturned;
-				}
-			});
-			done();
-		}, 1);
-	});
 	
 	afterEach(function(){
 		valueReturned = "";
@@ -70,7 +59,121 @@ describe("Test for Backbone model", function() {
 	});
 	
 	it("should check the fetch call", function() {
+		
 		expect(typeof valueReturned).toEqual("string");
 	});
 });
+
+describe("fetch call", function() {
+//	jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+//	var valueReturned;
+//    beforeAll(function(done) {
+//    	todoCollectionCursor.fetch({
+//			success : function(collection, response, options) {
+//				valueReturned = options.xhr.responseText; 
+//				return valueReturned;
+//			}
+//		});
+//    });
+	
+	beforeEach(function() {
+		  jasmine.Ajax.install();
+		});
+
+	   it("specifying response when you need it", function() {
+		   
+		      var doneFn = jasmine.createSpy("success");
+		      $.ajax({
+		    	 url: '/fetch',
+		    	 method: 'GET',
+		    	 success : function(data)
+		    	 {
+		    		 doneFn(data);
+		    	 }
+		      })
+		      console.log(jasmine.Ajax.requests.mostRecent());
+		      expect(jasmine.Ajax.requests.mostRecent().url).toBe('/fetch');
+	   });   
+		      it("Response check response when you need it", function() {
+
+			      var doneFn = jasmine.createSpy("success");
+			      $.ajax({
+			    	 url: '/fetch',
+			    	 method: 'GET',
+			    	 success : function(data)
+			    	 {
+			    		 doneFn(data);
+			    	 }
+			      })
+		      jasmine.Ajax.requests.mostRecent().respondWith({
+			        "status": 200,
+			        "contentType": 'text/plain',
+			        "responseText": '[{title:"Aravinth"}]'
+			   });
+		      expect(jasmine.Ajax.requests.mostRecent().responseText).toEqual('[{title:"Aravinth"}]');
+	   });      
+	   it("Status check response when you need it", function() {
+		   var doneFn = jasmine.createSpy("success");
+		   var xhr = new XMLHttpRequest();
+		      xhr.onreadystatechange = function(args) {
+		        if (this.readyState == this.DONE) {
+		          doneFn(this.responseText);
+		        }
+		      };
+		      xhr.open("GET", "/fetch");
+		      xhr.send();
+		      jasmine.Ajax.requests.mostRecent().respondWith({
+		        "status": 200,
+		        "contentType": 'text/plain',
+		        "responseText": 'awesome response'
+		      });
+		      expect(jasmine.Ajax.requests.mostRecent().status).toEqual(200);
+		      
+		    });
+		
+
+		    it("allows responses to be setup ahead of time", function () {
+		      var doneFn = jasmine.createSpy("success");
+		
+		
+
+		      jasmine.Ajax.stubRequest('/fetch').andReturn({
+		        "responseText": 'immediate response'
+		      });
+		
+		
+
+		      var xhr = new XMLHttpRequest();
+		      xhr.onreadystatechange = function(args) {
+		        if (this.readyState == this.DONE) {
+		          doneFn(this.responseText);
+		        }
+		      };
+
+		      xhr.open("GET", "/fetch");
+		      xhr.send();
+
+		      expect(doneFn).toHaveBeenCalledWith('immediate response');
+		    });
+		    
+		    afterEach(function() {
+		        jasmine.Ajax.uninstall();
+		      });
+});
+		// don't forget to uninstall as well...
+//		afterEach(function() {
+//		  jasmine.Ajax.uninstall();
+//		  
+//		});
+//
+//    it("should return string", function(done) {
+//    	console.log(valueReturned);
+//    	console.log(typeof valueReturned);
+//        expect(typeof valueReturned).toEqual('string');
+//
+//    });
+//    
+//  
+//  });
+
 
