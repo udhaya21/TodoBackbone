@@ -75,5 +75,6 @@
 	<classpathentry kind="lib" path="/Users/udhaya/Desktop/Spring/spring-websocket-4.3.0.RELEASE.jar"/>
 	<classpathentry kind="lib" path="/Users/udhaya/Desktop/gson-2.2.3.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/spring"/>
+	<classpathentry kind="lib" path="/Users/udhaya/Downloads/junit-4.10.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
